@@ -1,7 +1,7 @@
 
 import React from 'react'; 
 import './App.css';
-import FormularioLogin from './FormularioLogin';
+import FormularioLogin from './components/FormularioLogin';
 
 function App() {
   return (
