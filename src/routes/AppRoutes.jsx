@@ -17,7 +17,7 @@ import Unauthorized from '../components/auth/Unauthorized';
 
 function AppRoutes() {
   return (
-    <Router>
+    
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
@@ -25,21 +25,21 @@ function AppRoutes() {
         <Route path="*" element={<NotFound />} />
 
         {/* Rutas para Administrador */}
-        <Route path="/admin/dashboard" element={<RequireAuth allowedRoles={['ADMINISTRADOR']}><AdminDashboard /></RequireAuth>} />
-        <Route path="/admin/usuarios" element={<RequireAuth allowedRoles={['ADMINISTRADOR']}><GestionUsuarios /></RequireAuth>} />
-        <Route path="/admin/crear-test" element={<RequireAuth allowedRoles={['ADMINISTRADOR']}><CrearTest /></RequireAuth>} />
+        <Route path="/admin/dashboard" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><AdminDashboard /></RequireAuth>} />
+        <Route path="/admin/gestion-usuarios" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><GestionUsuarios /></RequireAuth>} />
+        <Route path="/admin/crear-test" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><CrearTest /></RequireAuth>} />
 
         {/* Rutas para Evaluador */}
-        <Route path="/evaluador/dashboard" element={<RequireAuth allowedRoles={['EVALUADOR']}><EvaluadorDashboard /></RequireAuth>} />
-        <Route path="/evaluador/asignar-test" element={<RequireAuth allowedRoles={['EVALUADOR']}><AsignarTest /></RequireAuth>} />
-        <Route path="/evaluador/resultados" element={<RequireAuth allowedRoles={['EVALUADOR']}><VerResultados /></RequireAuth>} />
+        <Route path="/evaluador/dashboard" element={<RequireAuth allowedRoles={['ROLE_EVALUADOR']}><EvaluadorDashboard /></RequireAuth>} />
+        <Route path="/evaluador/asignar-test" element={<RequireAuth allowedRoles={['ROLE_EVALUADOR']}><AsignarTest /></RequireAuth>} />
+        <Route path="/evaluador/resultados" element={<RequireAuth allowedRoles={['ROLE_EVALUADOR']}><VerResultados /></RequireAuth>} />
 
         {/* Rutas para Evaluado */}
-        <Route path="/evaluado/dashboard" element={<RequireAuth allowedRoles={['EVALUADO']}><EvaluadoDashboard /></RequireAuth>} />
-        <Route path="/evaluado/realizar-test/:testId" element={<RequireAuth allowedRoles={['EVALUADO']}><RealizarTest /></RequireAuth>} />
-        <Route path="/evaluado/mi-resultado" element={<RequireAuth allowedRoles={['EVALUADO']}><VerMiResultado /></RequireAuth>} />
+        <Route path="/evaluado/dashboard" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><EvaluadoDashboard /></RequireAuth>} />
+        <Route path="/evaluado/realizar-test/:testId" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><RealizarTest /></RequireAuth>} />
+        <Route path="/evaluado/mi-resultado" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><VerMiResultado /></RequireAuth>} />
       </Routes>
-    </Router>
+  
   );
 }
 

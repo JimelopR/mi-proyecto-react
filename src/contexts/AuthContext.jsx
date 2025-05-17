@@ -1,42 +1,49 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
-// Creamos el contexto de autenticación
+// Crear contexto
 export const AuthContext = createContext(null);
 
-// Creamos el proveedor del contexto
+// Hook para usar el contexto fácilmente
+export const useAuth = () => useContext(AuthContext);
+
+// Proveedor
 function AuthProvider({ children }) {
-  // Estado para almacenar la información de autenticación (rol)
   const [authInfo, setAuthInfo] = useState(() => {
-    // Intentamos obtener la información de autenticación del localStorage al cargar la aplicación
-    const storedAuth = localStorage.getItem('authInfo');
+    const storedAuth = sessionStorage.getItem('authInfo');
     return storedAuth ? JSON.parse(storedAuth) : null;
   });
 
-  // Efecto para guardar o eliminar la información de autenticación del localStorage
+  // Guardar o eliminar en sessionStorage al cambiar authInfo
   useEffect(() => {
     if (authInfo) {
-      localStorage.setItem('authInfo', JSON.stringify(authInfo));
+      sessionStorage.setItem('authInfo', JSON.stringify(authInfo));
     } else {
-      localStorage.removeItem('authInfo');
+      sessionStorage.removeItem('authInfo');
     }
   }, [authInfo]);
 
-  // Función para iniciar sesión (actualiza el estado authInfo)
-  const login = (role) => {
-    setAuthInfo({ role });
+  // Login
+  const login = (authData) => {
+    setAuthInfo(authData);
+    console.log("tokenContext (en login):", authData.token);
   };
 
-  // Función para cerrar sesión (limpia el estado authInfo)
+  // Logout
   const logout = () => {
     setAuthInfo(null);
   };
 
-  // El proveedor hace que el valor del contexto esté disponible para los componentes hijos
+  // Métodos de acceso (opcional si usas directamente authInfo)
+  const getRole = () => authInfo?.role || null;
+  const getNombre = () => authInfo?.nombre || null;
+  const getToken = () => authInfo?.token || null;
+
   return (
-    <AuthContext.Provider value={{ authInfo, login, logout }}>
+    <AuthContext.Provider value={{ authInfo, login, logout, getRole, getNombre, getToken }}>
       {children}
     </AuthContext.Provider>
   );
 }
+
 
 export default AuthProvider;
