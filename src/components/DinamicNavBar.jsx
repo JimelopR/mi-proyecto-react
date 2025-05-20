@@ -40,7 +40,7 @@ const DynamicNavbar = () => {
         rutas = [
           { path: '/evaluado/dashboard', label: 'Información de Interés' },
           { path: '/evaluado/realizar-test', label: 'Realizar Test' },
-          { path: '/evaluado/mi-resultado', label: 'Mi Resultado' },
+          { path: '/evaluado/mi-resultado', label: 'Resultados' },
         ];
         usuarioNombre = "Evaluado";
         break;
