@@ -148,18 +148,18 @@ const GestionUsuarios = () => {
 
   return (
     <Container className="my-5">
-      <Card style={{ backgroundColor: '#e3f2fd', borderColor: '#90caf9' }}>
-        <Card.Header style={{ backgroundColor: '#bbdefb', color: '#1e88e5' }}>
-          <h3>Gestión de Usuarios</h3>
+      <h2 className="mb-4">Gestión de Usuarios</h2>
+      <Card style={{ backgroundColor: '#e3f2fd', borderColor: '#c2e0f4' }}>
+        <Card.Header style={{ backgroundColor: '#6BAED6', color: '#fff' }}>
         </Card.Header>
         <Card.Body>
           {mensaje && <div className="alert alert-success">{mensaje}</div>}
           {error && <div className="alert alert-danger">{error}</div>}
 
-          <Button variant="primary" className="mb-3" onClick={handleAgregarModal} style={{ backgroundColor: '#90caf9', borderColor: '#90caf9' }}>
-            Agregar Nuevo Usuario
+          <Button className="mb-3" onClick={handleAgregarModal} style={{ padding: '0.5rem 1rem', background: '#89CFF0', border: 'none', borderRadius: '6px', color:'#000' }}>
+           + Agregar Nuevo Usuario
           </Button>
-
+      
           <Table striped bordered hover responsive>
             <thead>
               <tr style={{ backgroundColor: '#e0f7fa', color: '#0288d1' }}>
@@ -176,12 +176,15 @@ const GestionUsuarios = () => {
                   <td>{usuario.id}</td>
                   <td>{usuario.nombre}</td>
                   <td>{usuario.correo}</td>
-                  <td>{usuario.rol}</td>
+                  <td>{usuario.rol === 1 ? 'Administrador': 
+                        usuario.rol === 2 ? 'Evaluador': 
+                        usuario.rol === 3 ? 'Evaluado': 'Desconocido'}
+                  </td>
                   <td>
-                    <Button variant="info" size="sm" className="me-2" onClick={() => handleEditarModal(usuario)} style={{ backgroundColor: '#81d4fa', borderColor: '#81d4fa' }}>
+                    <Button variant="info" size="sm" className="me-2" onClick={() => handleEditarModal(usuario)} style={{ backgroundColor: '#aec2ab', borderColor: '#aec2ab' }}>
                       Editar
                     </Button>
-                    <Button variant="danger" size="sm" onClick={() => desactivarUsuario(usuario.id)} style={{ backgroundColor: '#f44336', borderColor: '#f44336' }}>
+                    <Button size="sm" onClick={() => desactivarUsuario(usuario.id)} style={{ backgroundColor: '#cd6155', borderColor: '#cd6155' }}>
                       Desactivar
                     </Button>
                   </td>
@@ -192,29 +195,29 @@ const GestionUsuarios = () => {
 
           {/* Modal para Agregar Nuevo Usuario */}
           <Modal show={showAgregarModal} onHide={handleCerrarAgregarModal}>
-            <Modal.Header closeButton style={{ backgroundColor: '#e0f7fa', color: '#0288d1' }}>
+            <Modal.Header closeButton style={{ padding: '0.5rem 1rem', background: '#c2e0f4', border: 'none', borderRadius: '6px', color:'#000'}}>
               <Modal.Title>Agregar Nuevo Usuario</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Form>
                 <Form.Group className="mb-3" controlId="formNuevoNombre">
-                  <Form.Label style={{ color: '#4dd0e1' }}>Nombre</Form.Label>
+                  <Form.Label >Nombre</Form.Label>
                   <Form.Control type="text" name="nombre" value={nuevoUsuario.nombre} onChange={handleInputChangeNuevoUsuario} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formNuevoNombre">
-                  <Form.Label style={{ color: '#4dd0e1' }}>Apellido Paterno</Form.Label>
+                  <Form.Label >Apellido Paterno</Form.Label>
                   <Form.Control type="text" name="apellidoPaterno" value={nuevoUsuario.apellidoPaterno} onChange={handleInputChangeNuevoUsuario} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formNuevoNombre">
-                  <Form.Label style={{ color: '#4dd0e1' }}>Apellido Materno</Form.Label>
+                  <Form.Label >Apellido Materno</Form.Label>
                   <Form.Control type="text" name="apellidoMaterno" value={nuevoUsuario.apellidoMaterno} onChange={handleInputChangeNuevoUsuario} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formNuevoCorreo">
-                  <Form.Label style={{ color: '#4dd0e1' }}>Correo Electrónico</Form.Label>
+                  <Form.Label >Correo Electrónico</Form.Label>
                   <Form.Control type="email" name="correo" value={nuevoUsuario.correo} onChange={handleInputChangeNuevoUsuario} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formNuevoRol">
-                  <Form.Label style={{ color: '#4dd0e1' }}>Rol</Form.Label>
+                  <Form.Label >Rol</Form.Label>
                   <Form.Control as="select" name="idTipoUsuario" value={nuevoUsuario.idTipoUsuario} onChange={handleInputChangeNuevoUsuario}>
                     <option value="3">Evaluado</option>
                     <option value="2">Evaluador</option>
@@ -223,11 +226,11 @@ const GestionUsuarios = () => {
                 </Form.Group>
               </Form>
             </Modal.Body>
-            <Modal.Footer style={{ backgroundColor: '#e0f7fa' }}>
+            <Modal.Footer style={{ backgroundColor: '#e0f2f7' }}>
               <Button variant="secondary" onClick={handleCerrarAgregarModal}>
                 Cancelar
               </Button>
-              <Button variant="primary" onClick={agregarNuevoUsuario} style={{ backgroundColor: '#81d4fa', borderColor: '#81d4fa' }}>
+              <Button onClick={agregarNuevoUsuario} style={{ padding: '0.5rem 1rem', background: '#89CFF0', border: 'none', borderRadius: '6px', color:'#000'}}>
                 Guardar
               </Button>
             </Modal.Footer>
@@ -235,14 +238,14 @@ const GestionUsuarios = () => {
 
           {/* Modal para Editar Usuario (Rol y Contraseña) */}
           <Modal show={showEditarModal} onHide={handleCerrarEditarModal}>
-            <Modal.Header closeButton style={{ backgroundColor: '#e0f2f7', color: '#00acc1' }}>
+            <Modal.Header closeButton style={{ padding: '0.5rem 1rem', background: '#c2e0f4', border: 'none', borderRadius: '6px', color:'#000'}}>
               <Modal.Title>Editar Usuario</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               {usuarioSeleccionado && (
                 <Form>
                   <Form.Group className="mb-3" controlId="formEditarRol">
-                    <Form.Label style={{ color: '#4dd0e1' }}>Rol</Form.Label>
+                    <Form.Label>Rol</Form.Label>
                     <Form.Control as="select" name="rol" value={editarUsuario.rol} onChange={handleInputChangeEditarUsuario}>
                       <option value="EVALUADO">Evaluado</option>
                       <option value="EVALUADOR">Evaluador</option>
@@ -250,7 +253,7 @@ const GestionUsuarios = () => {
                     </Form.Control>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formEditarPassword">
-                    <Form.Label style={{ color: '#4dd0e1' }}>Nueva Contraseña (opcional)</Form.Label>
+                    <Form.Label>Nueva Contraseña (opcional)</Form.Label>
                     <Form.Control type="password" name="nuevaContraseña" value={editarUsuario.nuevaContraseña} onChange={handleInputChangeEditarUsuario} />
                   </Form.Group>
                 </Form>
@@ -260,10 +263,10 @@ const GestionUsuarios = () => {
               <Button variant="secondary" onClick={handleCerrarEditarModal}>
                 Cancelar
               </Button>
-              <Button variant="primary" onClick={cambiarRolUsuario} style={{ backgroundColor: '#80deea', borderColor: '#80deea' }}>
+              <Button variant="warning" onClick={cambiarRolUsuario} style={{ backgroundColor: '#aec2ab', borderColor: '#aec2ab' }}>
                 Cambiar Rol
               </Button>
-              <Button variant="warning" onClick={cambiarContraseñaUsuario} style={{ backgroundColor: '#ffb74d', borderColor: '#ffb74d' }}>
+              <Button variant="warning" onClick={cambiarContraseñaUsuario} style={{ backgroundColor: '#89CFF0', borderColor: '#89CFF0' }}>
                 Cambiar Contraseña
               </Button>
             </Modal.Footer>

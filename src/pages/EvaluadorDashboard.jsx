@@ -6,30 +6,25 @@ import Footer from '../components/Footer';
 
 function EvaluadorDashboard() {
   return (
-    <div>
-      <Header />
-      <Container className="my-3">
-       
-        <Card style={{ backgroundColor: '#e0f2f7', borderColor: '#80deea' }}>
-          <Card.Header style={{ backgroundColor: '#b2ebf2', color: '#00acc1' }}>
-            <h3>Panel de Evaluador</h3>
-          </Card.Header>
-          <ListGroup variant="flush">
-            <ListGroup.Item style={{ backgroundColor: '#e0f2f7' }}>
-              <Link to="/evaluador/asignar-test" style={{ color: '#00acc1', textDecoration: 'none' }}>
-                Asignar Test
-              </Link>
-            </ListGroup.Item>
-            <ListGroup.Item style={{ backgroundColor: '#e0f2f7' }}>
-              <Link to="/evaluador/ver-resultados" style={{ color: '#00acc1', textDecoration: 'none' }}>
-                Ver Resultados
-              </Link>
-            </ListGroup.Item>
-          </ListGroup>
-        </Card>
-      </Container>
-      <Footer />
-    </div>
+    <div style={{ padding: '2rem', background: '#f0f4f8', minHeight: '100vh' }}>
+    <h1>Panel del Evaluador</h1>
+    <section style={{ background: '#fff', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+      <h2>¿Qué es el Test IDERE?</h2>
+      <p>Una herramienta para evaluar síntomas de burnout y fatiga laboral.</p>
+    </section>
+    <section style={{ background: '#fff', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
+      <h2>Interpretación de Resultados</h2>
+      <ul>
+        <li>Nivel Bajo: 0-10</li>
+        <li>Nivel Medio: 11-20</li>
+        <li>Nivel Alto: 21+</li>
+      </ul>
+    </section>
+    <section style={{ background: '#fff', padding: '1rem', borderRadius: '8px' }}>
+      <h2>Guías y Recursos</h2>
+      <a href="/manual.pdf" download>Descargar Manual PDF</a>
+    </section>
+  </div>
   );
 }
 

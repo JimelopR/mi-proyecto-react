@@ -38,7 +38,9 @@ function Login() {
                     if (response.data.message === 'Login successful' && response.data.role) {
                         login({role: response.data.role,
                             token: response.data.token,
-                            nombre: response.data.nombre});
+                            nombre: response.data.nombre,
+                            id: response.data.id});
+                        
                         // Redirección basada en el rol
                       
                         console.log("tokenenLogin: "+response.data.token);

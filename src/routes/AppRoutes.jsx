@@ -8,7 +8,7 @@ import AdminDashboard from '../pages/AdminDashboard';
 import EvaluadorDashboard from '../pages/EvaluadorDashboard';
 import EvaluadoDashboard from '../pages/EvaluadoDashboard';
 import GestionUsuarios from '../pages/admin/GestionUsuarios';
-import CrearTest from '../pages/admin/CrearTest';
+import GestionTest from '../pages/admin/GestionarTest';
 import AsignarTest from '../pages/evaluador/AsignarTest';
 import VerResultados from '../pages/evaluador/VerResultados';
 import RealizarTest from '../pages/evaluado/RealizarTest';
@@ -27,7 +27,7 @@ function AppRoutes() {
         {/* Rutas para Administrador */}
         <Route path="/admin/dashboard" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><AdminDashboard /></RequireAuth>} />
         <Route path="/admin/gestion-usuarios" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><GestionUsuarios /></RequireAuth>} />
-        <Route path="/admin/crear-test" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><CrearTest /></RequireAuth>} />
+        <Route path="/admin/gestion-test" element={<RequireAuth allowedRoles={['ROLE_ADMINISTRADOR']}><GestionTest /></RequireAuth>} />
 
         {/* Rutas para Evaluador */}
         <Route path="/evaluador/dashboard" element={<RequireAuth allowedRoles={['ROLE_EVALUADOR']}><EvaluadorDashboard /></RequireAuth>} />
@@ -36,7 +36,7 @@ function AppRoutes() {
 
         {/* Rutas para Evaluado */}
         <Route path="/evaluado/dashboard" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><EvaluadoDashboard /></RequireAuth>} />
-        <Route path="/evaluado/realizar-test/:testId" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><RealizarTest /></RequireAuth>} />
+        <Route path="/evaluado/realizar-test" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><RealizarTest /></RequireAuth>} />
         <Route path="/evaluado/mi-resultado" element={<RequireAuth allowedRoles={['ROLE_EVALUADO']}><VerMiResultado /></RequireAuth>} />
       </Routes>
   

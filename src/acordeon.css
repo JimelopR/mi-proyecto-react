@@ -1,0 +1,70 @@
+
+
+.acordeon .item-acordeon {
+  background-color: #f8f9fa !important;
+  border-radius: 5px !important;
+  margin-bottom: 10px !important;
+}
+
+.acordeon  .header-acordeon {
+  background-color: #fff !important;
+  padding: 15px !important;
+  border-radius: 5px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  cursor: pointer !important; /* Indicar que es interactivo */
+}
+
+
+.acordeon .pregunta-acordeon {
+  font-size: 16px !important;
+  color: #333 !important;
+  flex-grow: 1 !important; /* Ocupar el espacio disponible */
+}
+
+.acordeon .icono-acordeon {
+  color: #00577A !important;
+  font-size: 20px !important;
+  transition: transform 0.2s ease-in-out !important; /* Animación suave */
+}
+
+.acordeon .icono-acordeon.abierto {
+  transform: rotate(90deg) !important; /* Rotar la flecha cuando está abierto */
+}
+
+.accordion-body {
+  background-color: #ffffff !important;
+  padding: 1.25rem !important;
+  border-radius: 0 0 8px 8px !important;
+  border-top: 1px solid #f0f0f0 !important;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.accordion-button {
+  background-color: #ffffff !important;
+  color: #1d70b8 !important;
+  font-weight: bold !important;
+  padding: 1rem !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+.accordion-button::after {
+  display: none !important;
+}
+.pregunta-acordeon {
+  font-size: 16px !important;
+  color: #333 !important;
+  flex-grow: 1;
+}
+
+.icono-acordeon {
+  color: #00577A;
+  font-size: 20px;
+  margin-left: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+
+

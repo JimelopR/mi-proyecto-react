@@ -16,20 +16,21 @@ const DynamicNavbar = () => {
   // Determina las rutas basadas en el rol (asumiendo que authInfo siempre estará presente aquí)
   let rutas = [];
   let usuarioNombre = ""; // Nombre por defecto
-
+  let usuarioNombreCompleto = "";
   if (authInfo && authInfo.role) {
+    usuarioNombreCompleto = authInfo.nombre; 
     switch (authInfo.role) {
       case 'ROLE_ADMINISTRADOR':
         rutas = [
           { path: '/admin/dashboard', label: 'Dashboard' },
           { path: '/admin/gestion-usuarios', label: 'Usuarios' },
-          { path: '/admin/crear-test', label: 'Crear Test' },
+          { path: '/admin/gestion-test', label: 'Tests' },
         ];
         usuarioNombre = "Administrador";
         break;
       case 'ROLE_EVALUADOR':
         rutas = [
-          { path: '/evaluador/dashboard', label: 'Dashboard' },
+          { path: '/evaluador/dashboard', label: 'Información de Interés' },
           { path: '/evaluador/asignar-test', label: 'Asignar Test' },
           { path: '/evaluador/resultados', label: 'Ver Resultados' },
         ];
@@ -37,7 +38,7 @@ const DynamicNavbar = () => {
         break;
       case 'ROLE_EVALUADO':
         rutas = [
-          { path: '/evaluado/dashboard', label: 'Dashboard' },
+          { path: '/evaluado/dashboard', label: 'Información de Interés' },
           { path: '/evaluado/realizar-test', label: 'Realizar Test' },
           { path: '/evaluado/mi-resultado', label: 'Mi Resultado' },
         ];
@@ -68,7 +69,7 @@ const DynamicNavbar = () => {
           </Nav>
           <Nav>
             {authInfo && ( // Renderiza el NavDropdown solo si authInfo existe
-              <NavDropdown title={usuarioNombre} id="basic-nav-dropdown">
+              <NavDropdown title={usuarioNombre +" - "+usuarioNombreCompleto  } id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Cerrar sesión</NavDropdown.Item>
               </NavDropdown>
             )}

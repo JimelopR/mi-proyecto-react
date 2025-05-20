@@ -36,3 +36,37 @@
     transform: rotate(360deg);
   }
 }
+
+
+.nav-tabs {
+  display: flex;
+  justify-content: flex-start; /* Alinea los elementos al inicio */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-left: 10px; /* Añade un poco de espacio a la izquierda */
+  font: normal 20px;
+  font-weight: bold;
+}
+
+.nav-tabs .nav-link {
+  color: #00577A; /* Texto azul */
+  border-radius: 5px 5px 0 0; /* Bordes redondeados solo en la parte superior */
+  padding: 10px 15px;
+  margin-right: 5px; /* Espacio entre pestañas */
+  border: 1px solid #c2e0f4;
+  
+}
+
+/* Estilo de la pestaña activa */
+.nav-tabs .nav-link.active {
+  background-color: #00577A;
+  color: #c2e0f4; 
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  
+  
+}
+.nav-tabs .nav-link:hover {
+  color:#c2e0f4;
+  cursor: pointer; /* Cambia el cursor a una mano */
+}
+

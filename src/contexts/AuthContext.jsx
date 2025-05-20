@@ -26,6 +26,7 @@ function AuthProvider({ children }) {
   const login = (authData) => {
     setAuthInfo(authData);
     console.log("tokenContext (en login):", authData.token);
+    console.log("IDContext (en login):", authData.id);
   };
 
   // Logout
@@ -37,9 +38,10 @@ function AuthProvider({ children }) {
   const getRole = () => authInfo?.role || null;
   const getNombre = () => authInfo?.nombre || null;
   const getToken = () => authInfo?.token || null;
+  const getId = () => authInfo?.id|| null;
 
   return (
-    <AuthContext.Provider value={{ authInfo, login, logout, getRole, getNombre, getToken }}>
+    <AuthContext.Provider value={{ authInfo, login, logout, getRole, getNombre, getToken, getId }}>
       {children}
     </AuthContext.Provider>
   );
