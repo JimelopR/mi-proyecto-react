@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext  } from 'react';
-import { Container, Card, Table, Button, Modal, Form } from 'react-bootstrap';
+import {  Card,  Button} from 'react-bootstrap';
 import { AuthContext } from '../../contexts/AuthContext';
 import ResponderTest from '../../components/ResponderTest'; 
 
@@ -24,6 +24,7 @@ function RealizarTest() {
 
     const id = getId();
     const nombre = getNombre();
+   
     const fetchsetTestAsignados = async () => {
       try {
         console.log("ID recibido:", id);
@@ -50,6 +51,8 @@ function RealizarTest() {
         <Card.Header style={{ backgroundColor: '#6BAED6', color: '#fff' }}>
         </Card.Header>
         <Card.Body>
+      
+        {error && <div className="alert alert-danger">{error}</div>}
         <table style={{ width: '100%', marginTop: '1rem' }}>
           <thead>
             <tr>
@@ -62,7 +65,12 @@ function RealizarTest() {
             </tr>
           </thead>
           <tbody>
-          {testAsignados.map((row, i) => (
+          {testAsignados.length === 0 ? (
+    <tr>
+      <td >{<div className="alert alert-success">{'No hay test pendientes.'}</div>}</td>
+    </tr>
+  ) : (
+          testAsignados.map((row, i) => (
             <tr key={i}>
             <td>{nombre}</td>
             <td>{new Date(row.fechaAsignacion).toLocaleDateString()}</td>
@@ -74,15 +82,15 @@ function RealizarTest() {
                   ? new Date(row.fechaRealizacion).toLocaleDateString()
                   : ''}
             </td>
-            <td>{row.idTestAsignado==1 ? 'BURNOUT' : 'IDERE'}</td>           
+            <td>{row.testId==1 ? 'BURNOUT' : 'IDERE'}</td>           
             <td>
             <Button
               size="sm"
               className="me-2"
               style={{ backgroundColor: '#aec2ab', borderColor: '#aec2ab', color: '#000' }}
               onClick={() => {setMostrarFormulario(true)
-                setRegistroSeleccionado(row.id); // ← Esto guarda el ID del registro 
-                setTestArealizar(row.idTestAsignado);//(test a realizar)
+                setRegistroSeleccionado(row.idTestAsignado); // ← Esto guarda el ID del registro 
+                setTestArealizar(row.testId);//(test a realizar)
               }}
               
             >
@@ -90,7 +98,8 @@ function RealizarTest() {
             </Button>
             </td>
             </tr>
-          ))}
+          ))
+        )}
           </tbody>
         </table>
         </Card.Body>

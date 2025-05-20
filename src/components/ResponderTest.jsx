@@ -1,5 +1,5 @@
 
-import { Container, Card, Form, Button} from 'react-bootstrap';
+import { Container, Card, Form, Button, Alert} from 'react-bootstrap';
 import React, { useState, useEffect, useContext  } from 'react';
 import { AuthContext } from '../contexts/AuthContext'; 
 
@@ -14,15 +14,58 @@ const ResponderTest = ({ idAsignacion , testArealizar}) => {
     const { getToken } = useContext(AuthContext);
     const [error, setError] = useState(null);
     const [respuestas, setRespuestas] = useState({});
+   const testAsignadoId = idAsignacion;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // handle form submission
+      
+        try {
+          // Convertir "trabaja" de texto a booleano
+          const trabajaBoolean = respuestas.trabaja === 'Sí';
+      
+          //  Extraer edad y género
+          const edadEvaluado = parseInt(respuestas.edad, 10);
+          const genero = respuestas.genero;
+      
+          //  Filtrar solo las respuestas a preguntas 
+          const respuestasFormateadas = Object.entries(respuestas)
+            .filter(([key, value]) => !isNaN(Number(key))) // solo claves numéricas (preguntaId)
+            .map(([preguntaId, valor]) => ({
+              preguntaId: parseInt(preguntaId, 10),
+              valor: parseInt(valor, 10),
+            }));
+      
+          //  Armar el JSON completo
+          const payload = {
+            testAsignadoId: testAsignadoId, 
+            edadEvaluado: edadEvaluado,
+            genero: genero,
+            trabaja: trabajaBoolean,
+            respuestas: respuestasFormateadas
+          };
+      
+          //  Enviar al backend
+          const token = getToken();
+          console.log("Request payload:", payload);
+          const response = await axios.post('http://localhost:9090/api/evaluado/responder', payload, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          });
+      
+         
+          alert('Respuestas enviadas correctamente');
+          window.location.reload();
+        } catch (error) {
+          console.error('Error al enviar el formulario:', error);
+          alert('Hubo un error al enviar el formulario. Intenta nuevamente.');
+        }
       };
-      const handleChange = (questionId, answer) => {
-        setRespuestas(prev => ({ ...prev, [questionId]: answer }));
+      
+      const handleChange = (id, value) => {
+        setRespuestas(prev => ({ ...prev, [id]: value }));
       };
-            
 
     useEffect(() => {
         fetchFormato();
@@ -57,6 +100,7 @@ const ResponderTest = ({ idAsignacion , testArealizar}) => {
           <h3 style={{ margin: 0 }}>{formato.titulo}</h3>
         </Card.Header>
         <Card.Body>
+            {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
           <p className="mb-4">{formato.descripcion}</p>
 
           <Form onSubmit={handleSubmit}>
@@ -70,6 +114,44 @@ const ResponderTest = ({ idAsignacion , testArealizar}) => {
                 ))}
               </ul>
             </div>
+            
+            <Form.Group className="mb-3">
+                <Form.Label>Género</Form.Label>
+                <Form.Select
+                    value={respuestas.genero ?? ''}
+                    onChange={(e) => handleChange('genero', e.target.value)}
+                    required
+                >
+                    <option value="" disabled>Seleccione su género</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </Form.Select>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+                <Form.Label>Edad</Form.Label>
+                <Form.Control
+                    type="number"
+                    value={respuestas.edad ?? ''}
+                    onChange={(e) => handleChange('edad', e.target.value)}
+                    min="0"
+                    required
+                />
+            </Form.Group>
+
+            <Form.Group className="mb-4">
+                <Form.Label>¿Actualmente trabaja?</Form.Label>
+                <Form.Select
+                    value={respuestas.trabaja ?? ''}
+                    onChange={(e) => handleChange('trabaja', e.target.value)}
+                    required
+                >
+                    <option value="" disabled>Seleccione una opción</option>
+                    <option value="Sí">Sí</option>
+                    <option value="No">No</option>
+                    </Form.Select>
+            </Form.Group>
 
             {formato.preguntas?.map((pregunta, index) => (
               <Form.Group key={pregunta.id} className="mb-4">
@@ -93,7 +175,8 @@ const ResponderTest = ({ idAsignacion , testArealizar}) => {
             ))}
 
             <div className="d-flex justify-content-end mt-4">
-              <Button style={{ padding: '0.5rem 1rem', background: '#89CFF0', border: 'none', borderRadius: '6px', color:'#000' }}>
+              <Button type="submit"
+              style={{ padding: '0.5rem 1rem', background: '#89CFF0', border: 'none', borderRadius: '6px', color:'#000' }}>
                 Enviar
               </Button>
             </div>

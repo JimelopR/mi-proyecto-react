@@ -1,17 +1,12 @@
 import React from 'react';
 import { Container, Card, ListGroup } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import TestInfoSection from '../components/TestInfoSection';
 
 function EvaluadorDashboard() {
   return (
     <div style={{ padding: '2rem', background: '#f0f4f8', minHeight: '100vh' }}>
-    <h1>Panel del Evaluador</h1>
-    <section style={{ background: '#fff', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
-      <h2>¿Qué es el Test IDERE?</h2>
-      <p>Una herramienta para evaluar síntomas de burnout y fatiga laboral.</p>
-    </section>
+    <h1>Panel del Evaluador - Bienvenid@</h1>
+    <TestInfoSection />
     <section style={{ background: '#fff', padding: '1rem', borderRadius: '8px', marginBottom: '1rem' }}>
       <h2>Interpretación de Resultados</h2>
       <ul>
