@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext  } from 'react';
 import {  Card,  Button} from 'react-bootstrap';
 import { AuthContext } from '../../contexts/AuthContext';
+import ResultadoTest from '../../components/ResultadoTest';
 import axios from 'axios'
 
 function VerResultados() {
@@ -71,7 +72,13 @@ function VerResultados() {
             <td>{nombre}</td>
             <td>{new Date(row.fechaAsignacion).toLocaleDateString()}</td>
             <td>
-                {row.completado ? 'REALIZADO': 'PENDIENTE'}
+            {row.completado ? (
+                'REALIZADO'
+                ) : (
+                row.fechaRealizacion
+                ? 'REALIZADO'
+                : 'PENDIENTE'
+                )}
             </td>
             <td>
                 {row.fechaRealizacion
@@ -81,7 +88,7 @@ function VerResultados() {
             <td>{row.idTestAsignado==1 ? 'BURNOUT' : 'IDERE'}</td>           
             
             <td>
-      {row.completado && ( // Solo si está completado
+      {row.fechaRealizacion && ( // Solo si está completado
         <Button
           size="sm"
           className="me-2"
@@ -104,7 +111,7 @@ function VerResultados() {
         </Card.Body>
         </Card>
 
-        {/*mostrarResultado && <VerResultado idAsignacion={registroSeleccionado} />*/}
+        {mostrarResultado && <ResultadoTest idAsignacion={registroSeleccionado} />}
 
       </div>
   );

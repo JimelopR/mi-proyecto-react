@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import axios from 'axios';
 
-const ResultadoTest = ({ testId }) => {
+const ResultadoTest = ({ idAsignacion }) => {
+  console.log("idAsignaciond: "+ idAsignacion)
   const [resultado, setResultado] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -12,7 +13,7 @@ const ResultadoTest = ({ testId }) => {
     const fetchResultado = async () => {
       try {
         const token = getToken();
-        const response = await axios.get(`http://localhost:9090/obtenerResultado/${testId}`, {
+        const response = await axios.get(`http://localhost:9090/obtenerResultado/${idAsignacion}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -27,7 +28,7 @@ const ResultadoTest = ({ testId }) => {
     };
 
     fetchResultado();
-  }, [testId]);
+  }, [idAsignacion]);
 
   if (loading) return <p>Cargando resultado...</p>;
   if (error) return <p>{error}</p>;
@@ -55,7 +56,7 @@ const ResultadoTest = ({ testId }) => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <h2>Resultado del Test #{testId}</h2>
+      <h2>Resultado del Test #{idAsignacion}</h2>
       <h3>{titulo}</h3>
       <p><strong>Tipo:</strong> {tipo}</p>
       <p><strong>Evaluado:</strong> {evaluadoNombreCompleto} ({edadEvaluado} años, {genero})</p>

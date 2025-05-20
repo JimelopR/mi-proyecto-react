@@ -18,6 +18,13 @@ function VerMiResultado() {
       fetchsetTestResultados();
     }, []);
 
+    useEffect(() => {
+      if (registroSeleccionado !== null) {
+        // Este console.log se ejecutará DESPUÉS de que registroSeleccionado se haya actualizado
+        console.log("registroSeleccionado (después de la actualización): " + registroSeleccionado);
+        // Aquí puedes realizar cualquier otra acción que dependa del nuevo valor de registroSeleccionado
+      }
+    }, [registroSeleccionado]);
 
     const id = getId();
     const nombre = getNombre();
@@ -40,6 +47,7 @@ function VerMiResultado() {
       }
     };
 
+    
   return (
     
     <div style={{ background: '#fff', padding: '1rem', borderRadius: '8px' }}>
@@ -68,6 +76,7 @@ function VerMiResultado() {
     </tr>
   ) : (
             testResultados.map((row, i) => (
+              
             <tr key={i}>
             <td>{nombre}</td>
             <td>{new Date(row.fechaAsignacion).toLocaleDateString()}</td>
@@ -79,7 +88,7 @@ function VerMiResultado() {
                   ? new Date(row.fechaRealizacion).toLocaleDateString()
                   : ''}
             </td>
-            <td>{row.idTestAsignado==1 ? 'BURNOUT' : 'IDERE'}</td>           
+            <td>{row.tipo}</td>           
             
             <td>
       {row.estado ==='REALIZADO' && ( // Solo si está completado
@@ -90,7 +99,8 @@ function VerMiResultado() {
           }}
           onClick={() => {
             setMostrarResultado(true);
-            setRegistroSeleccionado(row.idTestAsignado);
+            setRegistroSeleccionado(row.id);
+           
           }}
         >
           Ver Resultado

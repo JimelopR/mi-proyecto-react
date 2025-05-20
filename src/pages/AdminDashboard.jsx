@@ -6,13 +6,15 @@ import { exportToCSV } from '../utils/exportToCSV';
 import { AuthContext } from '../contexts/AuthContext'; 
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
+import ResultadoTest from '../components/ResultadoTest';
 
 
 const AdminDashboard = () => {
   const tests = ['Todos', 'IDARE', 'BURNOUT'];
   const evaluadores = ['Todos', 'Laura Méndez', 'Carlos Peña'];
 
-
+  const [mostrarResultado, setMostrarResultado] = useState(false);
+  const [registroSeleccionado, setRegistroSeleccionado] = useState(null);
   const [testSeleccionado, setTestSeleccionado] = useState('Todos');
   const [evaluadorSeleccionado, setEvaluadorSeleccionado] = useState('Todos');
   const [testAsigandos, setTestAsigandos] = useState([]);
@@ -67,12 +69,6 @@ const AdminDashboard = () => {
             {tests.map((t, i) => <option key={i} value={t}>{t}</option>)}
           </select>
         </div>
-        <div>
-          <label>Evaluador:</label><br />
-          <select value={evaluadorSeleccionado} onChange={e => setEvaluadorSeleccionado(e.target.value)}>
-            {evaluadores.map((e, i) => <option key={i} value={e}>{e}</option>)}
-          </select>
-        </div>
         <div style={{ alignSelf: 'end' }}>
           <button onClick={() => exportToCSV(resultadosFiltrados)}
             style={{ padding: '0.5rem 1rem', background: '#89CFF0', border: 'none', borderRadius: '6px' }}>
@@ -116,21 +112,28 @@ const AdminDashboard = () => {
             <td>{row.evaluador?.nombreCompleto}</td>
             <td>{row.tipo}</td>
             <td>
-              <Button                 
-                size="sm"
-                className="me-2"
-                                   
-                style={{ backgroundColor: '#aec2ab', borderColor: '#aec2ab' , color:'#000' }}
-                >
-                Ver Resultado                   
-              </Button>
+              {row.estado ==='REALIZADO' && ( // Solo si está completado
+                      <Button
+                        size="sm"
+                        className="me-2"
+                        style={{backgroundColor: '#aec2ab',borderColor: '#aec2ab',color: '#000',
+                        }}
+                        onClick={() => {
+                          setMostrarResultado(true);
+                          setRegistroSeleccionado(row.id);
+                         
+                        }}
+                      >
+                        Ver Resultado
+                      </Button>
+                    )}
             </td>
             </tr>
           ))}
           </tbody>
         </table>
       </div>
-
+      {mostrarResultado && <ResultadoTest idAsignacion={registroSeleccionado} />}
       {/* Notificaciones */}
       <div style={{
         background: '#fff',
@@ -160,6 +163,7 @@ const AdminDashboard = () => {
           ))}
         </ul>
       </div>
+      
     </div>
   );
 };
